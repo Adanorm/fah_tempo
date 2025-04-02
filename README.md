@@ -5,3 +5,6 @@ La partie Tempo utilise cette API : https://www.api-couleur-tempo.fr/
 La partie EJP utilise cette API (pour le moment) : https://api-commerce.edf.fr/
 
 Si vous utilisez un autre fournisseur (Français ou pas) et qu'il expose une API pour récuperer des informations analogues, les contributions sont les bienvenues pour étendre les scripts à plus de besoins.
+
+Documentation à venir.
+Aide à l'installation à venir.
