@@ -1,12 +1,13 @@
 <?php
-
-
 // requete.php
+
+// on positionne la TZ pour avoir la bonne date & heure
+date_default_timezone_set('Europe/Paris');
 
 // Obtenir la date du jour au format YYYY-MM-DD
 $dateDuJour = date('Y-m-d');
 
-// Créer un nouvel objet DateTime pour aujourd'hui
+// CrÃ©er un nouvel objet DateTime pour aujourd'hui
 $aujourdHui = new DateTime();
 
 // Ajouter un jour pour obtenir la date de demain
@@ -23,56 +24,57 @@ $apiUrl = "https://api-commerce.edf.fr/commerce/activet/v1/calendrier-jours-effa
 $ch = curl_init($apiUrl);
 
 // Configurer les options cURL
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Retourner le résultat sous forme de chaîne
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Retourner le rÃ©sultat sous forme de chaÃ®ne
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    'Accept: application/json', // Accepter les réponses JSON
+    'Accept: application/json', // Accepter les rÃ©ponses JSON
 ]);
 
-// Exécuter la requête et récupérer la réponse
+// Pour dÃ©bugguer localement sans SSL :)
+// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);	
+
+// ExÃ©cuter la requÃªte et rÃ©cupÃ©rer la rÃ©ponse
 $response = curl_exec($ch);
 
-// Vérifier les erreurs cURL
+// VÃ©rifier les erreurs cURL
 if (curl_errno($ch)) {
     echo 'Erreur cURL : ' . curl_error($ch);
+} else {
+    // DÃ©coder la rÃ©ponse JSON
+    $data = json_decode($response, true);
+    
+    
+    // VÃ©rifier si le dÃ©codage JSON a rÃ©ussi
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        echo 'Erreur de dÃ©codage JSON : ' . json_last_error_msg();
+    } else {
+        // Traiter les donnÃ©es JSON
+        // Convertir le tableau en chaÃ®ne JSON
+        $jsonString = json_encode($data, JSON_PRETTY_PRINT);
+    
+    
+        $pattern = '/"statut"\s*:\s*"([^"]+)"/';
+        preg_match($pattern, $jsonString, $matches);
+    
+        // Afficher le premier statut
+        if (!empty($matches)) {
+            echo $matches[1]. "\n"; // Cela affichera : HORS_PERIODE_EJP
+            
+            // Obtenir l'heure actuelle au format "H" (heures sans les minutes)
+            $heureActuelle = date('H');
+    
+            // CrÃ©er le nom du fichier
+            $nomFichier = 'ejp' . $heureActuelle . '.txt';
+    
+            // Enregistrer le contenu de $matches[1] dans le fichier
+            file_put_contents($nomFichier, $matches[1]);
+        } else {
+            echo "Aucun statut trouvÃ©.";
+        }
+    }
 }
 
 // Fermer la session cURL
 curl_close($ch);
-
-// Décoder la réponse JSON
-$data = json_decode($response, true);
-
-
-// Vérifier si le décodage JSON a réussi
-if (json_last_error() !== JSON_ERROR_NONE) {
-    echo 'Erreur de décodage JSON : ' . json_last_error_msg();
-} else {
-    // Traiter les données JSON
-    // Convertir le tableau en chaîne JSON
-    $jsonString = json_encode($data, JSON_PRETTY_PRINT);
-
-
-    $pattern = '/"statut"\s*:\s*"([^"]+)"/';
-    preg_match($pattern, $jsonString, $matches);
-
-    // Afficher le premier statut
-    if (!empty($matches)) {
-        echo $matches[1]. "\n"; // Cela affichera : HORS_PERIODE_EJP
-        
-        // Obtenir l'heure actuelle au format "H" (heures sans les minutes)
-        $heureActuelle = date('H');
-
-        // Créer le nom du fichier
-        $nomFichier = 'ejp' . $heureActuelle . '.txt';
-
-        // Enregistrer le contenu de $matches[1] dans le fichier
-        file_put_contents($nomFichier, $matches[1]);
-    } else {
-        echo "Aucun statut trouvé.";
-    }
-}
-
-
-
 
 ?>
