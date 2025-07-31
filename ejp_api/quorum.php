@@ -6,7 +6,7 @@ $ejp = array();
 // Utiliser glob pour trouver tous les fichiers correspondant au motif ejp*.txt
 $fichiers = glob('ejp*.txt');
 
-// Parcourir chaque fichier trouvé
+// Parcourir chaque fichier trouvÃ©
 foreach ($fichiers as $fichier) {
     // Extraire XX du nom du fichier
     $nomFichier = basename($fichier, '.txt'); // Supprimer l'extension .txt
@@ -19,7 +19,7 @@ foreach ($fichiers as $fichier) {
     $ejp[$cle] = $contenu;
 }
 
-// Afficher le tableau associatif pour vérification
+// Afficher le tableau associatif pour vÃ©rification
 print_r($ejp);
 
 // Tableau pour compter les occurrences de chaque valeur
@@ -48,7 +48,7 @@ foreach ($occurrences as $valeur => $nombre) {
 // Afficher la valeur de consensus dans la console
 echo "La valeur de consensus est : " . $consensus . "\n";
 
-// Écrire le contenu de $consensus dans un fichier
+// Ã‰crire le contenu de $consensus dans un fichier
 file_put_contents('consensus_ejp.txt', $consensus);
 
 ?>
