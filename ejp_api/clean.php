@@ -7,10 +7,10 @@ $fichiers = glob('ejp[0-9][0-9].txt');
 foreach ($fichiers as $fichier) {
     if (is_file($fichier)) {
         unlink($fichier);
-        echo "Suppression du fichier : $fichier\n";
+        echo "Suppression du fichier : $fichier<br />\n";
     }
 }
 
-echo "Tous les fichiers ejpXX.txt ont été supprimés.\n";
+echo "Tous les fichiers ejpXX.txt ont été supprimés.<br />\n";
 
 ?>
