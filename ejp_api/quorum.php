@@ -20,7 +20,9 @@ foreach ($fichiers as $fichier) {
 }
 
 // Afficher le tableau associatif pour vérification
+echo "<pre>";
 print_r($ejp);
+echo "</pre>";
 
 // Tableau pour compter les occurrences de chaque valeur
 $occurrences = array();
