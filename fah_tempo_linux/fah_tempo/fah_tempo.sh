@@ -8,7 +8,7 @@ echo "Module chargé" >> $logfile
 codeJour=`cat $chemin_local/tempo_jour.txt`
 echo "Valeur du jour $codeJour" >> $logfile
 
-if [ $codeJour -le $seuil_coupure_tempo ]
+if [ $codeJour -ge $seuil_coupure_tempo ]
 then
 	echo "Coupure FAHv8" >> $logfile
 	lufah finish
