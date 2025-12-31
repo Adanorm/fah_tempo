@@ -13,6 +13,13 @@ then
 	echo "Coupure FAHv8" >> $logfile
 	lufah finish
 
+	if [ $coupure_apres_delais -eq 1 ]
+        then
+                echo "Attente $delais_extinction avant de couper le PC" >> $logfile
+                sleep $delais_extinction
+                echo "Arret slot GPU" >> $logfile
+                lufah pause
+				
 	if [ $eteindre_apres_delais -eq 1 ]
 	then
 		echo "Attente $delais_extinction avant de couper le PC" >> $logfile
