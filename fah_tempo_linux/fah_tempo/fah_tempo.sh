@@ -19,7 +19,7 @@ then
                 sleep $delais_extinction
                 echo "Arret slot GPU" >> $logfile
                 lufah pause
-				
+	fi			
 	if [ $eteindre_apres_delais -eq 1 ]
 	then
 		echo "Attente $delais_extinction avant de couper le PC" >> $logfile
