@@ -2,7 +2,7 @@
 . ~/fah_tempo/config.cfg
 
 echo "Lancement du module $module" >> $logfile
-bash "$module".mod
+bash "$chemin_local/$module".mod
 echo "Module chargé" >> $logfile
 
 codeJour=`cat $chemin_local/tempo_jour.txt`
